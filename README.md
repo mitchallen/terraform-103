@@ -96,7 +96,7 @@ kubectl get svc random-example -o jsonpath='{.spec.ports[0].nodePort}'
 Replace **NODE_PORT** with the port returned above:
 
 ```sh
-curl curl http://localhost:NOTE_PORT            
+curl http://localhost:NOTE_PORT            
 
 curl http://localhost:NODE_PORT/v1/people/1
 
