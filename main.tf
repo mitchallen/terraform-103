@@ -5,7 +5,7 @@ provider "kubernetes" {
   config_path            = "~/.kube/config"
 }
 
-# Create an Nginx pod
+# Create a pod
 resource "kubernetes_pod" "random_server" {
   metadata {
     # name = "terraform-example"
