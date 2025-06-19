@@ -6,7 +6,7 @@ VALIDATE = terraform validate
 PLAN = terraform plan
 APPLY = terraform apply
 
-.PHONY: all fmt init validate plan apply help up kube-system-status get-nodeport
+.PHONY: all fmt init validate plan apply help up kube-system-status get-nodeport get-services
 
 all: fmt init validate plan
 
@@ -45,6 +45,9 @@ kube-system-status:
 get-nodeport:
 	kubectl get svc random-example -o jsonpath='{.spec.ports[0].nodePort}'
 
+get-services:
+	kubectl get services
+
 help:
 	@echo "Usage: make [target]"
 	@echo "Targets:"
@@ -56,5 +59,6 @@ help:
 	@echo "  up        Check if Docker is running, then run init, plan, apply, and kubectl get pod"
 	@echo "  kube-system-status  Show the status of all resources in the kube-system namespace"
 	@echo "  get-nodeport  Get the NodePort of the random-example service"
+	@echo "  get-services  Get the list of services in the current Kubernetes namespace"
 
 .DEFAULT_GOAL := help
