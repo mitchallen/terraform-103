@@ -1,5 +1,12 @@
-
 # terraform-103
+
+## Using Make
+
+This project includes a Makefile with helpful targets for common Terraform and Kubernetes tasks. Use `make help` to see available commands, and use targets like `make up`, `make get-services`, and `make check-nodeport` to streamline your workflow.
+
+```sh
+make
+```
 
 ## Usage
 
