@@ -6,7 +6,7 @@ VALIDATE = terraform validate
 PLAN = terraform plan
 APPLY = terraform apply
 
-.PHONY: all fmt init validate plan apply help up kube-system-status get-nodeport get-services
+.PHONY: all fmt init validate plan apply help up kube-system-status get-nodeport get-services check-nodeport
 
 all: fmt init validate plan
 
@@ -48,6 +48,10 @@ get-nodeport:
 get-services:
 	kubectl get services
 
+check-nodeport:
+	@PORT=$(shell kubectl get svc random-example -o jsonpath='{.spec.ports[0].nodePort}'); \
+	curl -s http://localhost:$$PORT | jq .
+
 help:
 	@echo "Usage: make [target]"
 	@echo "Targets:"
@@ -60,5 +64,6 @@ help:
 	@echo "  kube-system-status  Show the status of all resources in the kube-system namespace"
 	@echo "  get-nodeport  Get the NodePort of the random-example service"
 	@echo "  get-services  Get the list of services in the current Kubernetes namespace"
+	@echo "  check-nodeport  Get the NodePort and verify the service using curl"
 
 .DEFAULT_GOAL := help
