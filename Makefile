@@ -6,7 +6,7 @@ VALIDATE = terraform validate
 PLAN = terraform plan
 APPLY = terraform apply
 
-.PHONY: all fmt init validate plan apply help up kube-system-status get-nodeport get-services check-nodeport
+.PHONY: all fmt init validate plan apply help up kube-system-status get-nodeport get-services check-nodeport destroy cleanup
 
 all: fmt init validate plan
 
@@ -52,6 +52,12 @@ check-nodeport:
 	@PORT=$(shell kubectl get svc random-example -o jsonpath='{.spec.ports[0].nodePort}'); \
 	curl -s http://localhost:$$PORT | jq .
 
+destroy:
+	$(APPLY) -destroy -auto-approve
+
+cleanup: destroy
+	docker system prune -af --volumes
+
 help:
 	@echo "Usage: make [target]"
 	@echo "Targets:"
@@ -65,5 +71,7 @@ help:
 	@echo "  get-nodeport  Get the NodePort of the random-example service"
 	@echo "  get-services  Get the list of services in the current Kubernetes namespace"
 	@echo "  check-nodeport  Get the NodePort and verify the service using curl"
+	@echo "  destroy    Destroy Terraform-managed infrastructure"
+	@echo "  cleanup    Destroy infrastructure and prune Docker system"
 
 .DEFAULT_GOAL := help
