@@ -17,7 +17,7 @@ resource "kubernetes_pod" "random_server" {
 
   spec {
     container {
-      image = "mitchallen/random-server:latest"
+      image = "ghcr.io/mitchallen/random-server:latest"
       name  = "random"
       port {
         container_port = 3100
