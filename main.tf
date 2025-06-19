@@ -1,6 +1,6 @@
 # Configure Kubernetes provider and connect to the Kubernetes API server
 provider "kubernetes" {
-  host = "https://localhost:6443"
+  host                   = "https://localhost:6443"
   config_context_cluster = "docker-desktop"
   config_path            = "~/.kube/config"
 }
@@ -36,7 +36,7 @@ resource "kubernetes_service" "random" {
       App = "${kubernetes_pod.random_server.metadata.0.labels.App}"
     }
     port {
-      port = 80
+      port        = 80
       target_port = 3100
     }
 
