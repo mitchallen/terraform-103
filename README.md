@@ -10,9 +10,39 @@ A Kubernetes and Terraform example
 
 This project includes a Makefile with helpful targets for common Terraform and Kubernetes tasks. Use `make help` to see available commands, and use targets like `make up`, `make get-services`, and `make check-nodeport` to streamline your workflow.
 
+### Using `make up`
+
+The `make up` target will:
+- Check if Docker is running (and exit with a message if not)
+- Check if your local Kubernetes cluster is available (and exit with a message if not)
+- Run `terraform init`, `terraform plan`, and `terraform apply -auto-approve`
+- Show the status of your pods with `kubectl get pod`
+
+This is a convenient way to initialize, plan, and apply your Terraform configuration and verify your Kubernetes pods are running—all in one step.
+
 ```sh
-make
+make up
 ```
+
+### After the server is running
+
+Once your server is up, you can use the following Makefile targets to interact with your deployment:
+
+- `make check-nodeport`: Get the NodePort and verify the service is responding with JSON using curl.
+- `make get-nodeport`: Retrieve the NodePort for the random-example service.
+- `make get-services`: List all services in your current Kubernetes namespace.
+
+These commands help you quickly verify and interact with your running Kubernetes service.
+
+### Cleaning up resources
+
+To keep costs down and avoid running unnecessary resources, always run:
+
+```sh
+make destroy
+```
+
+when you are finished. This will destroy all Terraform-managed infrastructure and help ensure your environment is clean.
 
 ## Usage
 
